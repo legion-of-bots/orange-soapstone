@@ -1,0 +1,15 @@
+{
+  "**** ahead":           { "capitalize": true },
+  "Be wary of ****":      {},
+  "Try ****":             {},
+  "Need ****":            {},
+  "Imminent ****":        {},
+  "Weakness: ****":       { "capitalize": true },
+  "****":                 { "capitalize": true },
+  "****?":                { "capitalize": true },
+  "Good luck":            {},
+  "I did it!":            {},
+  "Here!":                {},
+  "I can't take this...": {},
+  "Praise the Sun!":      {}
+}
