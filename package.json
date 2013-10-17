@@ -2,7 +2,8 @@
   "name": "orange-soapstone",
 
   "dependencies": {
-    "twit": "1.1.11"
+    "twit":  "1.1.11",
+    "grunt": "*"
   },
   "devDependencies": {
 
