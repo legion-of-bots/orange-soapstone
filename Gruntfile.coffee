@@ -19,4 +19,5 @@ module.exports = (grunt) ->
 
     require('./lib/orangeSoapstone')(config, messages, done)
 
+  grunt.registerTask 'compile', ['messages']
   grunt.registerTask 'default', ['messages', 'run']
