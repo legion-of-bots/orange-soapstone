@@ -4,7 +4,7 @@
 
   "dependencies": {
     "twit":  "1.1.11",
-    "grunt": "*",
+    "grunt": "0.4.1",
     "coffee-script": "*"
   },
   "devDependencies": {
