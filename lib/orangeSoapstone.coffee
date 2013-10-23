@@ -34,14 +34,25 @@ tweet_random_message = () ->
 # Tweets a random message and then schedules the next tweet
 tweet_loop = () ->
   tweet_random_message()
-  interval = interval()
+  schedule_next_tweet()
+
+# Schedules a tweet
+schedule_next_tweet = (i) ->
+  unless i?
+    i = interval()
   console.log ''
-  console.log "Tweeting again in: #{interval / 3600000} hours" # 3600000 = # of milliseconds in an hour
-  set_timeout interval, tweet_loop
+  console.log "Tweeting again in: #{i / 3600000} hours" # 3600000 = # of milliseconds in an hour
+  set_timeout i, tweet_loop
 
 config   = parse_config_file 'config'
 messages = parse_config_file 'all_messages'
 
-twit     = new Twit config.twitter
+twit = new Twit config.twitter
 
-tweet_loop()
+args = process.argv.slice(2)
+next = 0
+if args.length != 0
+  next = parseFloat(args[0]) || next
+next *= 3600000
+
+schedule_next_tweet(next)
