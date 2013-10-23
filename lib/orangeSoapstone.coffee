@@ -13,7 +13,7 @@ parse_config_file = (file_name) ->
 
 # Wrapper to switch the arguments for setTimeout
 set_timeout = (interval, callback) ->
-  setTimeout(callback, interval).ref()
+  setTimeout(callback, interval)
 
 # Returns a random integer between the arguments
 random_between = (min, max) ->
