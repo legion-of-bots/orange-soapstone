@@ -15,9 +15,9 @@ parse_config_file = (file_name) ->
 set_timeout = (interval, callback) ->
   setTimeout(callback, interval).ref()
 
-# Returns a random number between the arguments
+# Returns a random integer between the arguments
 random_between = (min, max) ->
-  Math.random() * (max - min) + min
+  parseInt(Math.random() * (max - min) + min)
 
 # Returns a random number between the interval min and max settings
 interval = () ->
@@ -25,7 +25,7 @@ interval = () ->
 
 # Tweets a random one of the messages
 tweet_random_message = () ->
-  message = messages[Math.floor(Math.random() * messages.length)]
+  message = messages[random_between(0, messages.length - 1)]
   console.log ''
   console.log 'Tweeting:'
   console.log message
@@ -34,11 +34,14 @@ tweet_random_message = () ->
 # Tweets a random message and then schedules the next tweet
 tweet_loop = () ->
   tweet_random_message()
-  set_timeout interval(), tweet_loop
+  interval = interval()
+  console.log ''
+  console.log "Tweeting again in: #{interval / 3600000} hours" # 3600000 = # of milliseconds in an hour
+  set_timeout interval, tweet_loop
 
 config   = parse_config_file 'config'
 messages = parse_config_file 'all_messages'
 
 twit     = new Twit config.twitter
 
-set_timeout interval(), tweet_loop
+tweet_loop()
