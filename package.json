@@ -3,9 +3,9 @@
   "version": "0.1.0",
 
   "dependencies": {
-    "twit":  "1.1.11",
-    "grunt": "0.4.1",
-    "coffee-script": "*"
+    "twit":           "1.1.11",
+    "grunt":          "0.4.2",
+    "coffee-script":  "*"
   },
   "devDependencies": {
 
