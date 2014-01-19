@@ -7,11 +7,14 @@ Twit = require 'twit'
 resolve_config_file = (file_name) ->
   path.resolve(__dirname, '..', 'config', file_name)
 
-# Read a json config file.  No extension required
+# Read a json config file.  Extension is assumed to be json
+# If an error occurs then undefined is returned.
 parse_config_file = (file_name) ->
-  JSON.parse(fs.readFileSync(resolve_config_file(file_name + '.json'), 'utf8'))
+  try
+    JSON.parse(fs.readFileSync(resolve_config_file(file_name + '.json'), 'utf8'))
+  catch error
 
-# Wrapper to switch the arguments for setTimeout
+# Wrapper to switch the order of arguments for setTimeout
 set_timeout = (interval, callback) ->
   setTimeout(callback, interval)
 
@@ -44,15 +47,25 @@ schedule_next_tweet = (i) ->
   console.log "Tweeting again in: #{i / 3600000} hours" # 3600000 = # of milliseconds in an hour
   set_timeout i, tweet_loop
 
+# Main
 config   = parse_config_file 'config'
 messages = parse_config_file 'all_messages'
 
-twit = new Twit config.twitter
+if config? and messages?
 
-args = process.argv.slice(2)
-next = 0
-if args.length != 0
-  next = parseFloat(args[0]) || next
-next *= 3600000
+  twit = new Twit config.twitter
 
-schedule_next_tweet(next)
+  args = process.argv.slice(2)
+  next = 0
+  if args.length != 0
+    next = parseFloat(args[0]) || next
+  next *= 3600000
+
+  schedule_next_tweet(next)
+
+else
+  console.log """
+    There was an error parsing one of the config files.
+    Please make sure that config/config.json exists and has the necessary values.
+    Also remember to run grunt messages to generate the list of possible tweets.
+    """
