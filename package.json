@@ -4,7 +4,8 @@
 
   "scripts": {
     "start":       "node ./bin/orange-soapstone",
-    "postinstall": "grunt"
+    "postinstall": "grunt",
+    "test":        "node ./test/"
   },
 
   "dependencies": {

@@ -20,23 +20,27 @@ random_between = (min, max) ->
 
 # Tweets a random one of the messages
 tweet_random_message = () ->
-  message = messages[random_between(0, messages.length - 1)]
-  console.log ''
-  console.log 'Tweeting:'
-  console.log message
-  twit.post 'statuses/update', { status: message }, (->)
+  message = messages[random_between(0, messages.length)]
+  if not message? then console.error "Message not found"
+  console.log """
+    Tweeting:
+    #{message}
+    """
+  twit.post 'statuses/update', { status: message }, (->) unless test_mode
 
 # Main
-config   = parse_config_file 'config'
-messages = parse_config_file 'all_messages'
+config    = parse_config_file 'config'
+messages  = parse_config_file 'all_messages'
 
-if config? and messages?
+test_mode = process.argv[2] == 'test'
 
-  twit = new Twit config.twitter
+if (test_mode or config?) and messages?
+
+  twit = new Twit config.twitter unless test_mode
   do tweet_random_message
 
 else
-  console.log """
+  console.error """
     There was an error parsing one of the config files.
     Please make sure that config/config.json exists and has the necessary values.
     Also remember to run grunt to generate the list of possible tweets.
