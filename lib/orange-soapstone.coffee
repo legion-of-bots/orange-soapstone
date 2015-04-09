@@ -1,7 +1,9 @@
-fs   = require 'fs'
-path = require 'path'
+fs     = require 'fs'
+path   = require 'path'
 
-Twit = require 'twit'
+Twit   = require 'twit'
+
+logger = require './logger'
 
 # Resolve a file path for a configuration file
 resolve_config_file = (file_name) ->
@@ -18,15 +20,19 @@ parse_config_file = (file_name) ->
 random_between = (min, max) ->
   parseInt(Math.random() * (max - min) + min)
 
-# Tweets a random one of the messages
-tweet_random_message = () ->
-  message = messages[random_between(0, messages.length)]
-  if not message? then console.error "Message not found"
+# Tweets a given message
+tweet = (message) ->
+  logger.log_tweet(message)
   console.log """
     Tweeting:
     #{message}
     """
   twit.post 'statuses/update', { status: message }, (->) unless test_mode
+
+# Tweets a random one of the messages
+tweet_random_message = () ->
+  message = messages[random_between(0, messages.length)]
+  tweet(message)
 
 # Main
 config    = parse_config_file 'config'
