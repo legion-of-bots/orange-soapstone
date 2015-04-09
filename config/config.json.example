@@ -4,9 +4,5 @@
     "consumer_secret": "",
     "access_token": "",
     "access_token_secret": ""
-  },
-  "settings": {
-    "interval-min": 21600000,
-    "interval-max": 28800000
   }
 }
