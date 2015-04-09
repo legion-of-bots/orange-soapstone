@@ -1,9 +1,10 @@
 {
-  "name": "orange-soapstone",
-  "version": "0.1.1",
+  "name":    "orange-soapstone",
+  "version": "0.2.0",
 
   "scripts": {
-    "start": "node ./index.js"
+    "start":       "node ./bin/orange-soapstone",
+    "postinstall": "grunt"
   },
 
   "dependencies": {
